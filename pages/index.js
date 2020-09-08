@@ -1,65 +1,140 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+
+import Layout from "../components/Layout/Layout";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  var slides = [
+    {
+      src: "img/canhdiem.jpg",
+    },
+    {
+      src: "img/canh_diem3.jpg",
+    },
+    {
+      src: "img/canhdiem.jpg",
+    },
+  ];
+  let [slideIndex, setSlideIndex] = useState(1);
+
+  // Next/previous controls
+  function plusSlides(n) {
+    var slide = (slideIndex += n);
+    if (slide > slides.length) setSlideIndex(1);
+    else if (slide < 1) setSlideIndex(slides.length);
+    else setSlideIndex(slide);
+  }
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Homepage</title>
       </Head>
+      <Layout>
+        <section id="home-body">
+          <div className="banner-container">
+            <div className="categories-list">
+              <div className="category">
+                <h6>Food</h6>
+                <div className="categories-sublist">
+                  <div className="sub-category">
+                    <p>Food</p>
+                  </div>
+                  <div className="sub-category">
+                    <p>Drink</p>
+                  </div>
+                  <div className="sub-category">
+                    <p>Electric</p>
+                  </div>
+                </div>
+              </div>
+              <div className="category">
+                <h6>Drink</h6>
+                <div className="categories-sublist">
+                  <div className="sub-category">
+                    <p>1</p>
+                  </div>
+                  <div className="sub-category">
+                    <p>2</p>
+                  </div>
+                  <div className="sub-category">
+                    <p>3</p>
+                  </div>
+                </div>
+              </div>
+              <div className="category">
+                <h6>Electric</h6>
+              </div>
+            </div>
+            <div className="banners">
+              <div className="main-banner">
+                {/* Full-width images with number and caption text */}
+                {slides.map((image, index) => (
+                  <div
+                    className={"mySlides fade"}
+                    style={slideIndex - 1 == index ? { display: "block" } : {}}
+                    key={index}
+                  >
+                    <img src={image.src} style={{ width: "100%" }} />
+                  </div>
+                ))}
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+                {/* Next and previous buttons */}
+                <a className="prev" onClick={() => plusSlides(-1)}>
+                  ❮
+                </a>
+                <a className="next" onClick={() => plusSlides(1)}>
+                  ❯
+                </a>
+              </div>
+              {/* The dots/circles */}
+              <div style={{ textAlign: "center" }}>
+                {slides.map((image, index) => (
+                  <span
+                    key={index}
+                    className={
+                      "dot " + (slideIndex - 1 == index ? "active" : "none")
+                    }
+                    onClick={() => currentSlide(index + 1)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <div className="product-section">
+              <h3 className="title-product-section">Sản phẩm bán chạy</h3>
+              <div className="products">
+                <div className="product">
+                  <div className="product-image">
+                    <a href="product.htm">
+                      <img src="img/canhdiem.jpg" alt="No data" />
+                    </a>
+                  </div>
+                  <h6>Lorem ipsum dolor sit amet.</h6>
+                  <div className="price">
+                    <p>500.000 VND</p>
+                    <p className="discount-price">700.000 VND</p>
+                  </div>
+                </div>
+                <div className="product">
+                  <div className="product-image out-of-stock">
+                    <a href="product.htm"></a>
+                    <a href="product.htm">
+                      <img src="img/canhdiem.jpg" alt="No data" />
+                    </a>
+                    <span>Out of stock</span>
+                  </div>
+                  <h6>Lorem ipsum dolor sit amet.</h6>
+                  <div className="price">
+                    <p>500.000 VND</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    </>
+  );
 }
