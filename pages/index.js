@@ -1,9 +1,17 @@
 import Head from "next/head";
 
-import Layout from "../components/Layout/Layout";
-import { useEffect, useState } from "react";
+import { wrapper } from "../store";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { loadProducts, selectProducts } from "../lib/slices/productSlice";
+import Layout from "../components/Layout/Layout";
+
+const Home = (props) => {
+  //Redux
+  const dispatch = useDispatch();
+  const { products } = useSelector(selectProducts);
+
   var slides = [
     {
       src: "img/canhdiem.jpg",
@@ -105,6 +113,20 @@ export default function Home() {
             <div className="product-section">
               <h3 className="title-product-section">Sản phẩm bán chạy</h3>
               <div className="products">
+                {products.map((product, index) => (
+                  <div key={index} className="product">
+                    <div className="product-image">
+                      <a href="product.htm">
+                        <img src="img/canhdiem.jpg" alt="No data" />
+                      </a>
+                    </div>
+                    <h6>{product.title}</h6>
+                    <div className="price">
+                      <p>{product.price}</p>
+                      <p className="discount-price">700.000 VND</p>
+                    </div>
+                  </div>
+                ))}
                 <div className="product">
                   <div className="product-image">
                     <a href="product.htm">
@@ -137,4 +159,12 @@ export default function Home() {
       </Layout>
     </>
   );
-}
+};
+// Read manual about `getServerSideProps` or `getStaticProps` usage. Choose what fits you better
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store }) => {
+    await store.dispatch(loadProducts());
+  }
+);
+
+export default connect((state) => state)(Home);

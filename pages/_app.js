@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
-import store from "../store";
+// import store from "../store";
+import { wrapper } from "../store";
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -22,13 +23,15 @@ const App = ({ Component, pageProps }) => {
   // }, [router.events]);
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
+    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <Component {...pageProps} />
-    </Provider>
+    </>
+    // </Provider>
   );
 };
 
-export default App;
+export default wrapper.withRedux(App);

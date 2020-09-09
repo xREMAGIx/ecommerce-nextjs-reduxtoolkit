@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { createWrapper } from "next-redux-wrapper";
 
-// import clockReducer from "./lib/slices/clockSlice";
-// import counterReducer from "./lib/slices/counterSlice";
-// import notesReducer from "./lib/slices/notesSlice";
 import userReducer from "./lib/slices/userSlice";
+import productsReducer from "./lib/slices/productSlice";
 
-export default configureStore({
-  reducer: {
-    // counter: counterReducer,
-    // clock: clockReducer,
-    // notes: notesReducer,
-    user: userReducer,
-  },
-  devTools: true,
-});
+export const makeStore = (context) =>
+  configureStore({
+    reducer: {
+      user: userReducer,
+      products: productsReducer,
+    },
+    devTools: process.env.NODE_ENV === "development",
+  });
+
+export const wrapper = createWrapper(makeStore, { debug: true });

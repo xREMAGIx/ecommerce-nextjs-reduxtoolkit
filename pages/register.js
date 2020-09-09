@@ -13,17 +13,20 @@ const Register = () => {
 
   //Main hooks
   const [formData, setFormData] = useState({
+    email: "",
     username: "",
     password: "",
     repassword: "",
   });
 
-  useEffect(() => {
-    // async function dispatchRegister() {
-    //   await dispatch(register(formData));
-    // }
-    // dispatchRegister();
-  }, [dispatch]);
+  const handleSubmit = () => {
+    event.preventDefault();
+    if (formData.password.localeCompare(formData.repassword) != 0)
+      dispatch(register(formData));
+    else {
+      alert("Password and respassword not match!");
+    }
+  };
 
   return (
     <>
@@ -31,7 +34,9 @@ const Register = () => {
         <title>Register</title>
       </Head>
       <section id="register-form">
-        <form action method="post">
+        {/* <div id="snackbar">Some text some message..</div> */}
+
+        <form onSubmit={handleSubmit}>
           <h1>Register</h1>
           <div className="form-input">
             <input
@@ -39,16 +44,39 @@ const Register = () => {
               name="register-email"
               id="register-email"
               required
+              value={formData.email || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
             />
             <label htmlFor="register-email">Email</label>
             <span />
           </div>
           <div className="form-input">
             <input
+              type="text"
+              name="register-username"
+              id="register-username"
+              required
+              value={formData.username || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, username: e.target.value })
+              }
+            />
+            <label htmlFor="register-username">Username</label>
+            <span />
+          </div>
+
+          <div className="form-input">
+            <input
               type="password"
               name="register-password"
               id="register-password"
               required
+              value={formData.password || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
             />
             <label htmlFor="register-password">Password</label>
             <span />
@@ -56,11 +84,15 @@ const Register = () => {
           <div className="form-input">
             <input
               type="password"
-              name="register-password"
-              id="register-password"
+              name="register-repassword"
+              id="register-repassword"
               required
+              value={formData.repassword || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, repassword: e.target.value })
+              }
             />
-            <label htmlFor="register-password">Re-enter Password</label>
+            <label htmlFor="register-repassword">Re-enter Password</label>
             <span />
           </div>
           <button type="submit">Register</button>
