@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <meta charset="UTF-8" />
+          <meta charSet="UTF-8" />
 
           <link
             rel="stylesheet"

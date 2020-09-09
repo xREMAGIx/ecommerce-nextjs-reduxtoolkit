@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +12,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const { token } = useSelector(selectUser);
 
+  const router = useRouter();
+
   //Main hooks
   const [formData, setFormData] = useState({
     username: "",
@@ -18,11 +21,16 @@ const Login = () => {
   });
 
   useEffect(() => {
-    // async function dispatchLogin() {
-    //   await dispatch(login(formData));
-    // }
-    // dispatchLogin();
-  }, [dispatch]);
+    if (token != "")
+      router.push({
+        pathname: "/",
+      });
+  }, [token]);
+
+  const handleSubmit = () => {
+    event.preventDefault();
+    dispatch(login(formData));
+  };
 
   return (
     <>
@@ -30,11 +38,20 @@ const Login = () => {
         <title>Login </title>
       </Head>
       <section id="login-form">
-        <form action method="post">
+        <form onSubmit={handleSubmit}>
           <h1>Login</h1>
           <div className="form-input">
-            <input type="text" name="login-email" id="login-email" required />
-            <label htmlFor="login-email">Email</label>
+            <input
+              type="text"
+              name="login-username"
+              id="login-username"
+              required
+              value={formData.username || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, username: e.target.value })
+              }
+            />
+            <label htmlFor="login-username">Username</label>
             <span />
           </div>
           <div className="form-input">
@@ -43,6 +60,10 @@ const Login = () => {
               name="login-password"
               id="login-password"
               required
+              value={formData.password || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
             />
             <label htmlFor="login-password">Password</label>
             <span />

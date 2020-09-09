@@ -1,6 +1,15 @@
 import Link from "next/link";
 
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logout, selectUser } from "../../lib/slices/userSlice";
+
 const Header = () => {
+  //Redux
+  const dispatch = useDispatch();
+  const { token } = useSelector(selectUser);
+
   return (
     <>
       {/* Topbar */}
@@ -84,23 +93,47 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="user-container">
-                  <div className="user-menu">
-                    <h6>
-                      Welcome to <strong>Organic</strong>
-                    </h6>
-                    <Link href="/login" as="/login">
-                      <a>
-                        <button className="login-btn">Đăng nhập</button>
-                      </a>
-                    </Link>
-                    <div className="py-1" />
-                    <span>Bạn là khách hàng mới?</span>
-                    <Link href="/register" as="/register">
-                      <a>
-                        <button className="register-btn">Đăng kí</button>
-                      </a>
-                    </Link>
-                  </div>
+                  {token == "" ? (
+                    <div className="user-menu">
+                      <h6>
+                        Welcome to <strong>Organic</strong>
+                      </h6>
+                      <Link href="/login" as="/login">
+                        <a>
+                          <button className="login-btn">Đăng nhập</button>
+                        </a>
+                      </Link>
+                      <div className="py-1" />
+                      <span>Bạn là khách hàng mới?</span>
+                      <Link href="/register" as="/register">
+                        <a>
+                          <button className="register-btn">Đăng kí</button>
+                        </a>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="user-menu">
+                      <h6>
+                        Welcome to <strong>Organic</strong>
+                      </h6>
+                      {/* <Link href="/login" as="/login">
+                        <a>
+                          <button className="login-btn">Đăng nhập</button>
+                        </a>
+                      </Link>
+                      <div className="py-1" />
+                      <span>Bạn là khách hàng mới?</span> */}
+
+                      <button
+                        className="register-btn"
+                        onClick={() => {
+                          dispatch(logout());
+                        }}
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
