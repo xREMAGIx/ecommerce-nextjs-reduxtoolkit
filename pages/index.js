@@ -167,4 +167,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 );
 
-export default connect((state) => state)(Home);
+export default Home;

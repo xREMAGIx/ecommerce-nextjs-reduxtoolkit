@@ -40,7 +40,9 @@ const Header = () => {
       <section id="main-navbar">
         <div className="navbar-2">
           <div className="container">
-            <div className="logo">Oganic</div>
+            <Link href="/">
+              <div className="logo">Oganic</div>
+            </Link>
             <form action="" className="search">
               <input type="text" placeholder="Nhập từ khóa" />
               <button type="submit">
@@ -81,16 +83,13 @@ const Header = () => {
               </div>
               <div className="user-icon">
                 <div className="user-btn">
-                  <Link href="/user/info" as="/user/info">
-                    <a>
-                      <i className="fas fa-user" />
-                    </a>
-                  </Link>
-                  <Link href="/user/info" as="/user/info">
-                    <a>
-                      <p>Tài khoản</p>
-                    </a>
-                  </Link>
+                  <a>
+                    <i className="fas fa-user" />
+                  </a>
+
+                  <a>
+                    <p>Tài khoản</p>
+                  </a>
                 </div>
                 <div className="user-container">
                   {token == "" ? (
@@ -114,15 +113,14 @@ const Header = () => {
                   ) : (
                     <div className="user-menu">
                       <h6>
-                        Welcome to <strong>Organic</strong>
+                        Welcome <strong>Username</strong>
                       </h6>
-                      {/* <Link href="/login" as="/login">
+                      <Link href="/user/info" as="/user/info">
                         <a>
-                          <button className="login-btn">Đăng nhập</button>
+                          <button className="login-btn">Profile</button>
                         </a>
                       </Link>
                       <div className="py-1" />
-                      <span>Bạn là khách hàng mới?</span> */}
 
                       <button
                         className="register-btn"
