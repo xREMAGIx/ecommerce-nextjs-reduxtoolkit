@@ -10,6 +10,11 @@ import Layout from "../components/Layout/Layout";
 const Home = (props) => {
   //Redux
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(loadProducts());
+
+  //   console.log("Product");
+  // });
   const { products } = useSelector(selectProducts);
 
   var slides = [
@@ -123,7 +128,7 @@ const Home = (props) => {
                     <h6>{product.title}</h6>
                     <div className="price">
                       <p>{product.price}</p>
-                      <p className="discount-price">700.000 VND</p>
+                      <p className="discount-price"></p>
                     </div>
                   </div>
                 ))}
