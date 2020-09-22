@@ -10,11 +10,11 @@ import Layout from "../components/Layout/Layout";
 const Home = (props) => {
   //Redux
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(loadProducts());
+  useEffect(() => {
+    dispatch(loadProducts());
 
-  //   console.log("Product");
-  // });
+    console.log("Product");
+  }, []);
   const { products } = useSelector(selectProducts);
 
   var slides = [
@@ -166,10 +166,11 @@ const Home = (props) => {
   );
 };
 // Read manual about `getServerSideProps` or `getStaticProps` usage. Choose what fits you better
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    await store.dispatch(loadProducts());
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store }) => {
+//     console.log("before dispatch");
+//     await store.dispatch(loadProducts());
+//   }
+// );
 
 export default Home;
