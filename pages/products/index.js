@@ -5,12 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { wrapper } from "../../store";
 import { loadProducts, selectProducts } from "../../lib/slices/productSlice";
 import Layout from "../../components/Layout/Layout";
+import { useRouter } from "next/router";
 
 const ProductList = () => {
   const { products } = useSelector(selectProducts);
+  const router = useRouter();
+  //Redux
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadProducts(router.asPath));
+
+    console.log(router.asPath);
+  }, []);
 
   return (
-    <>
+    <div>
       <Head>
         <title>Product List</title>
       </Head>
@@ -84,7 +93,10 @@ const ProductList = () => {
                   <div key className="product">
                     <div className="product-image">
                       {product.images.length > 0 ? (
-                        <img src={product.images[0].image} alt="Nodata" />
+                        <img
+                          src={`https://localhost:5001/${product.images[0].url}`}
+                          alt="Nodata"
+                        />
                       ) : (
                         <img src="img/canhdiem.jpg" alt="Nodata" />
                       )}
@@ -126,13 +138,13 @@ const ProductList = () => {
           </form>
         </section>
       </Layout>
-    </>
+    </div>
   );
 };
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    await store.dispatch(loadProducts());
-  }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async ({ store }) => {
+//     await store.dispatch(loadProducts());
+//   }
+// );
 
 export default ProductList;

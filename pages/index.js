@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { loadProducts, selectProducts } from "../lib/slices/productSlice";
 import Layout from "../components/Layout/Layout";
+import Link from "next/link";
 
 const Home = (props) => {
   //Redux
@@ -121,9 +122,12 @@ const Home = (props) => {
                 {products.map((product, index) => (
                   <div key={index} className="product">
                     <div className="product-image">
-                      <a href="product.htm">
-                        <img src="img/canhdiem.jpg" alt="No data" />
-                      </a>
+                      <Link href={`/products/${product.slug}`}>
+                        <img
+                          src={`https://localhost:5001/${product.images[0].url}`}
+                          alt="No data"
+                        />
+                      </Link>
                     </div>
                     <h6>{product.title}</h6>
                     <div className="price">
@@ -132,31 +136,6 @@ const Home = (props) => {
                     </div>
                   </div>
                 ))}
-                <div className="product">
-                  <div className="product-image">
-                    <a href="product.htm">
-                      <img src="img/canhdiem.jpg" alt="No data" />
-                    </a>
-                  </div>
-                  <h6>Lorem ipsum dolor sit amet.</h6>
-                  <div className="price">
-                    <p>500.000 VND</p>
-                    <p className="discount-price">700.000 VND</p>
-                  </div>
-                </div>
-                <div className="product">
-                  <div className="product-image out-of-stock">
-                    <a href="product.htm"></a>
-                    <a href="product.htm">
-                      <img src="img/canhdiem.jpg" alt="No data" />
-                    </a>
-                    <span>Out of stock</span>
-                  </div>
-                  <h6>Lorem ipsum dolor sit amet.</h6>
-                  <div className="price">
-                    <p>500.000 VND</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

@@ -4,12 +4,20 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout, selectUser } from "../../lib/slices/userSlice";
-
+import { useRouter } from "next/router";
 const Header = () => {
   //Redux
   const dispatch = useDispatch();
   const { token } = useSelector(selectUser);
+  const handleSubmit = (e) => {
+    console.log("asdasdasdasdasdasdadsdsa");
+    e.preventdefault();
+    router.push({
+      pathname: "/products",
+    });
+  };
 
+  const router = useRouter();
   return (
     <>
       {/* Topbar */}
@@ -43,7 +51,15 @@ const Header = () => {
             <Link href="/">
               <div className="logo">Oganic</div>
             </Link>
-            <form action="" className="search">
+            <form
+              className="search"
+              onSubmit={(e) => {
+                e.preventDefault();
+                router.push({
+                  pathname: "/products",
+                });
+              }}
+            >
               <input type="text" placeholder="Nhập từ khóa" />
               <button type="submit">
                 <i className="fa fa-search" />
@@ -182,9 +198,12 @@ const Header = () => {
             </div>
             <div className="nav-link">
               <ul>
-                <a href="#">
-                  <li>Trang chủ</li>
-                </a>
+                <Link href="/">
+                  <a href="/">
+                    <li>Trang chủ</li>
+                  </a>
+                </Link>
+
                 <a href="#">
                   <li>Giới thiệu</li>
                 </a>
