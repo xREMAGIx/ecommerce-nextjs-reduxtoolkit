@@ -16,7 +16,7 @@ const Login = () => {
 
   //Main hooks
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -29,6 +29,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     event.preventDefault();
+    console.log(formData);
     dispatch(login(formData));
   };
 
@@ -46,12 +47,12 @@ const Login = () => {
               name="login-username"
               id="login-username"
               required
-              value={formData.username || ""}
+              value={formData.email || ""}
               onChange={(e) =>
-                setFormData({ ...formData, username: e.target.value })
+                setFormData({ ...formData, email: e.target.value })
               }
             />
-            <label htmlFor="login-username">Username</label>
+            <label htmlFor="login-username">Email</label>
             <span />
           </div>
           <div className="form-input">

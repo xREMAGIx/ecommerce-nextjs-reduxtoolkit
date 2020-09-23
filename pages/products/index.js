@@ -6,6 +6,7 @@ import { wrapper } from "../../store";
 import { loadProducts, selectProducts } from "../../lib/slices/productSlice";
 import Layout from "../../components/Layout/Layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const ProductList = () => {
   const { products } = useSelector(selectProducts);
@@ -90,21 +91,22 @@ const ProductList = () => {
               </div>
               <div className="products">
                 {products.map((product, index) => (
-                  <div key className="product">
-                    <div className="product-image">
-                      {product.images.length > 0 ? (
-                        <img
-                          src={`https://localhost:5001/${product.images[0].url}`}
-                          alt="Nodata"
-                        />
-                      ) : (
-                        <img src="img/canhdiem.jpg" alt="Nodata" />
-                      )}
+                  <Link href={`/products/${product.slug}`}>
+                    <div key className="product">
+                      <div className="product-image">
+                        {product.images.length > 0 ? (
+                          <img
+                            src={`https://localhost:5001/${product.images[0].url}`}
+                            alt="Nodata"
+                          />
+                        ) : (
+                          <img src="img/canhdiem.jpg" alt="Nodata" />
+                        )}
+                      </div>
+                      <h6>{product.title}</h6>
+                      <p>{product.price}</p>
                     </div>
-                    <h6>{product.title}</h6>
-                    <p>{product.price}</p>
-                    <button>Add to Cart</button>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

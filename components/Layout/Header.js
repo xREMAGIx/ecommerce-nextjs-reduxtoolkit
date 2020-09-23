@@ -67,7 +67,7 @@ const Header = () => {
             </form>
             <div className="icons">
               <div className="heart-icon">
-                <Link href="#">
+                <Link href="/user/favorite">
                   <a className="favorite-link">
                     <span className="flaticon-heart">
                       <div className="number">1</div>
@@ -76,7 +76,7 @@ const Header = () => {
                 </Link>
 
                 <div>
-                  <Link href="/favorite" as="/favorite">
+                  <Link href="/user/favorite" as="/favorite">
                     <a>
                       <p>Danh sách</p>
                       <p>yêu thích</p>

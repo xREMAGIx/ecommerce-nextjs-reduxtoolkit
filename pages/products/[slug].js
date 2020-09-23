@@ -1,15 +1,31 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 import { wrapper } from "../../store";
-import { loadProducts, selectProducts } from "../../lib/slices/productSlice";
+import { loadProduct, selectProduct } from "../../lib/slices/productSlice";
 import Layout from "../../components/Layout/Layout";
+import axios from "axios";
+import { route } from "next/dist/next-server/server/router";
 
 const ProductDetail = () => {
-  const { products } = useSelector(selectProducts);
+  const { product } = useSelector(selectProduct);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  useEffect(() => {
+    console.log(router.query.slug);
+    router &&
+      router.query &&
+      router.query.slug &&
+      dispatch(loadProduct(router.query.slug));
+  }, [router]);
 
+  useEffect(() => {
+    console.log(product);
+  }, [product]);
   //Slides function
+
   var slides = [
     {
       src: "../img/canhdiem.jpg",
@@ -63,17 +79,22 @@ const ProductDetail = () => {
                 <div className="product-images">
                   {/* Full-width images with number and caption text */}
                   <div className="main-image">
-                    {slides.map((image, index) => (
-                      <div
-                        className={"mySlides fade"}
-                        style={
-                          slideIndex - 1 == index ? { display: "block" } : {}
-                        }
-                        key={index}
-                      >
-                        <img src={image.src} style={{ width: "100%" }} />
-                      </div>
-                    ))}
+                    {product &&
+                      product.images &&
+                      product.images.map((image, index) => (
+                        <div
+                          className={"mySlides fade"}
+                          style={
+                            slideIndex - 1 == index ? { display: "block" } : {}
+                          }
+                          key={index}
+                        >
+                          <img
+                            src={`https://localhost:5001/${image.url}`}
+                            style={{ width: "100%" }}
+                          />
+                        </div>
+                      ))}
                   </div>
                   {/* Next and previous buttons */}
                   <a className="prev" onClick={() => plusSlides(-1)}>
@@ -85,17 +106,19 @@ const ProductDetail = () => {
 
                   {/* Thumbnail images */}
                   <div className="row">
-                    {slides.map((slide, index) => (
-                      <div className="column">
-                        <img
-                          className="demo cursor"
-                          src={slide.src}
-                          style={{ width: "100%" }}
-                          onClick={() => setSlideIndex(index + 1)}
-                          alt="The Woods"
-                        />
-                      </div>
-                    ))}
+                    {product &&
+                      product.images &&
+                      product.images.map((image, index) => (
+                        <div className="column">
+                          <img
+                            className="demo cursor"
+                            src={`https://localhost:5001/${image.url}`}
+                            style={{ width: "100%" }}
+                            onClick={() => setSlideIndex(index + 1)}
+                            alt="Product image"
+                          />
+                        </div>
+                      ))}
                   </div>
                 </div>
                 <div className="description">
@@ -109,15 +132,10 @@ const ProductDetail = () => {
                     </div>
                     <p>3 reviews</p>
                   </div>
-                  <h1>Surface Pro 6</h1>
-                  <div className="price">200,000VND</div>
+                  <h1>{product && product.title}</h1>
+                  <div className="price">{product && product.price}VND</div>
                   <h4>Short Description:</h4>
-                  <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Ipsam aliquid harum repellendus aut similique modi, maiores
-                    esse enim consectetur sit explicabo pariatur alias ut ipsum
-                    quas ullam molestias nesciunt rerum!
-                  </p>
+                  <p>{product && product.descripion}</p>
                   <div>
                     <ul className="product-details">
                       <li>Lorem ipsum dolor sit.</li>
@@ -263,4 +281,11 @@ const ProductDetail = () => {
 //   }
 // );
 
+// This gets called on every request
+// export const getServerSideProps = async ({ req, query, params }) => {
+//   const res = await axios.get(`/api/products/${query.slug}`);
+
+//   console.log(res.data);
+//   return { props: { data: res.data } };
+// };
 export default ProductDetail;
